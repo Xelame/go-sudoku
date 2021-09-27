@@ -8,13 +8,17 @@ import (
 
 func main() {
 	arguments := os.Args[1:]
-	for _, arg := range arguments {
-		caracteres := [9]string{}
-		for index, cara := range arg {
-			caracteres[index] = string(cara)
+	if len(arguments) == 9 {
+		for _, arg := range arguments {
+			caracteres := [9]string{}
+			for index, cara := range arg {
+				caracteres[index] = string(cara)
+			}
+			arg := Join(caracteres, " ")
+			fmt.Println(arg)
 		}
-		arg := Join(caracteres, " ")
-		fmt.Println(arg)
+	} else {
+		fmt.Println("ERROR")
 	}
 }
 
