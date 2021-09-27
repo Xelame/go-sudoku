@@ -7,21 +7,35 @@ import (
 )
 
 func main() {
-	arguments := os.Args[1:]
-	if len(arguments) == 9 {
-		for _, arg := range arguments {
-			caracteres := [9]string{}
-			for index, cara := range arg {
-				caracteres[index] = string(cara)
+	tableau := os.Args[1:]
+	if len(tableau) == 9 {
+		for _, ligne := range tableau {
+			colonnes := [9]string{}
+			for index, colonne := range ligne {
+				colonnes[index] = string(colonne)
 			}
-			arg := Join(caracteres, " ")
-			fmt.Println(arg)
+			ligne := Join(colonnes, " ")
+			fmt.Println(ligne)
 		}
 	} else {
 		fmt.Println("ERROR")
 	}
 }
 
+/*
+func TestNumber() {
+	arguments := os.Args[1:]
+	for _, value := range arguments {
+		if value == "." {
+			betting := true
+			for betNumber := '1'; betNumber < '9' && betting; betNumber++ {
+				value
+			}
+		}
+
+	}
+}
+*/
 func Join(strs [9]string, sep string) string {
 	var str string
 	for i := 0; i < len(strs); i++ {
