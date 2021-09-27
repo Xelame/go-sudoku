@@ -35,7 +35,7 @@ func main() {
 		fmt.Println("ERROR")
 	}
 }
-
+/*
 func TestNumber(betNumber string) {
 	tableau := os.Args[1:]
 	for _, ligne := range tableau {
@@ -52,7 +52,7 @@ func TestNumber(betNumber string) {
 		}
 	}
 }
-
+*/
 func Join(strs [9]string, sep string) string {
 	var str string
 	for i := 0; i < len(strs); i++ {
