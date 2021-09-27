@@ -7,6 +7,6 @@ import (
 )
 
 func main() {
-	arguments := os.Args
-	fmt.Println(arguments)
+	arguments2 := os.Args
+	fmt.Println(arguments2)
 }
