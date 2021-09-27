@@ -22,20 +22,23 @@ func main() {
 	}
 }
 
-/*
-func TestNumber() {
-	arguments := os.Args[1:]
-	for _, value := range arguments {
-		if value == "." {
-			betting := true
-			for betNumber := '1'; betNumber < '9' && betting; betNumber++ {
-				value
+func TestNumber(betNumber string) {
+	tableau := os.Args[1:]
+	for _, ligne := range tableau {
+		for index, value := range ligne {
+			if value == '.' {
+				betting := true
+				for betNumber := '1'; betNumber < '9' && betting; betNumber++ {
+					value = betNumber
+					for indextest, testValue := range ligne {
+
+					}
+				}
 			}
 		}
-
 	}
 }
-*/
+
 func Join(strs [9]string, sep string) string {
 	var str string
 	for i := 0; i < len(strs); i++ {
