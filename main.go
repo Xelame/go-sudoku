@@ -8,34 +8,22 @@ import (
 
 func main() {
 	tableau := os.Args[1:]
-	iscorect := true
-	if len(tableau) == 9 {
+	isValid := ValidGrid(tableau)
+	if isValid {
 		for _, ligne := range tableau {
-			for _, colonne := range ligne {
-				if colonne != '.' {
-					if  colonne < 48 || colonne > 57 {
-						iscorect = false
-					}
-				}
+			colonnes := [9]string{}
+			for index, colonne := range ligne {
+				colonnes[index] = string(colonne)
 			}
-		}
-		if iscorect {
-			for _, ligne := range tableau {
-				colonnes := [9]string{}
-				for index, colonne := range ligne {
-					colonnes[index] = string(colonne)
-				}
-				ligne := Join(colonnes, " ")
-				fmt.Println(ligne)
-			}
-		} else {
-			fmt.Println("ERROR")
+			ligne := Join(colonnes, " ")
+			fmt.Println(ligne)
 		}
 	} else {
 		fmt.Println("ERROR")
 	}
 }
 
+/*
 func TestNumber(betNumber string) {
 	tableau := os.Args[1:]
 	for _, ligne := range tableau {
@@ -52,7 +40,7 @@ func TestNumber(betNumber string) {
 		}
 	}
 }
-
+*/
 func Join(strs [9]string, sep string) string {
 	var str string
 	for i := 0; i < len(strs); i++ {
@@ -63,4 +51,22 @@ func Join(strs [9]string, sep string) string {
 		}
 	}
 	return str
+}
+
+func ValidGrid(tableau []string) bool {
+	iscorect := true
+	if len(tableau) == 9 {
+		for _, ligne := range tableau {
+			for _, colonne := range ligne {
+				if colonne != '.' {
+					if colonne < 48 || colonne > 57 {
+						iscorect = false
+					}
+				}
+			}
+		}
+	} else {
+		iscorect = false
+	}
+	return iscorect
 }
