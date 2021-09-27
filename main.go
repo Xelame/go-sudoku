@@ -7,6 +7,8 @@ import (
 )
 
 func main() {
-	arguments2 := os.Args
-	fmt.Println(arguments2)
+	arguments := os.Args[1:]
+	for _, arg := range arguments {
+		fmt.Println(arg)
+	}
 }
