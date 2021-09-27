@@ -8,7 +8,7 @@ import (
 
 func main() {
 	arguments := os.Args[1:]
-	for _, arg := range arguments {
-		fmt.Println(arg)
+	for _, argu := range arguments {
+		fmt.Println(argu)
 	}
 }
