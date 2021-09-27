@@ -9,8 +9,8 @@ import (
 func main() {
 	arguments := os.Args[1:]
 	for _, arg := range arguments {
-		caracteres := make([]string, 9)
-		for index,cara := range arg {
+		caracteres := [9]string{}
+		for index, cara := range arg {
 			caracteres[index] = string(cara)
 		}
 		arg := Join(caracteres, " ")
@@ -18,7 +18,7 @@ func main() {
 	}
 }
 
-func Join(strs []string, sep string) string {
+func Join(strs [9]string, sep string) string {
 	var str string
 	for i := 0; i < len(strs); i++ {
 		if i != len(strs)-1 {
