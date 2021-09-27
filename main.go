@@ -18,25 +18,6 @@ func main() {
 	}
 }
 
-
-func SplitWhiteSpaces(s string) []string {
-	tab := []string{}
-	cont := -1
-	if s[0] == ' ' {
-		cont = 0
-	}
-	for i := 1; i < len(s); i++ {
-		if s[i] == ' ' {
-			if s[cont+1:i] != "" {
-				tab = append(tab, s[cont+1:i])
-			}
-			cont = i
-		}
-	}
-	tab = append(tab, s[cont+1:])
-	return tab
-}
-
 func Join(strs []string, sep string) string {
 	var str string
 	for i := 0; i < len(strs); i++ {
