@@ -12,8 +12,13 @@ func main() {
 	}
 	if ValidGrid(tableau) {
 		IsValid(tableau, 0)
-		for _, value := range tableau {
+		fmt.Println()
+		fmt.Println("-----------------")
+		for index, value := range tableau {
 			fmt.Println(Join(string(value), " "))
+			if index == 2 || index == 5 || index == 8 {
+				fmt.Println("-----------------")
+			}
 		}
 	} else {
 		fmt.Println("Error")
