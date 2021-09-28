@@ -15,6 +15,8 @@ func main() {
 		for _, value := range tableau {
 			fmt.Println(Join(string(value), " "))
 		}
+	} else {
+		fmt.Println("Error")
 	}
 }
 
@@ -22,17 +24,20 @@ func ValidGrid(tableau [][]rune) bool {
 	iscorect := true
 	if len(tableau) == 9 {
 		for _, ligne := range tableau {
-			for _, colonne := range ligne {
-				if colonne != 46 {
-					if colonne < 49 || colonne > 58 {
-						iscorect = false
+			if len(ligne) == 9 {
+				for _, colonne := range ligne {
+					if colonne != 46 {
+						if colonne < 49 || colonne > 58 {
+							iscorect = false
+						}
 					}
 				}
+			} else {
+				iscorect = false
 			}
 		}
 	} else {
 		iscorect = false
-		fmt.Println("ERROR")
 	}
 	return iscorect
 }
