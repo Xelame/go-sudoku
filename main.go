@@ -6,71 +6,44 @@ import (
 )
 
 func main() {
-	tableau := [][]rune{}
+	board := [][]rune{}
 	for i := range os.Args[1:] {
-		tableau = append(tableau, []rune(os.Args[1:][i]))
+		board = append(board, []rune(os.Args[1:][i]))
 	}
-	if ValidGrid(tableau) {
-		IsValid(tableau, 0)
-		fmt.Println()
-		fmt.Println("-----------------")
-		for index, value := range tableau {
-			fmt.Println(Join(string(value), " "))
-			if index == 2 || index == 5 || index == 8 {
-				fmt.Println("-----------------")
-			}
-		}
-	} else {
-		fmt.Println("Error")
-	}
+	fmt.Println("Sudoku donnée : ")
+	Display(board)
+	fmt.Println("Sudoku résolu : ")
+	NumberIsValid(board, 0)
+	Display(board)
 }
 
-func ValidGrid(tableau [][]rune) bool {
-	iscorect := true
-	if len(tableau) == 9 {
-		for _, ligne := range tableau {
-			if len(ligne) == 9 {
-				for _, colonne := range ligne {
-					if colonne != 46 {
-						if colonne < 49 || colonne > 58 {
-							iscorect = false
-						}
-					}
-				}
-			} else {
-				iscorect = false
-			}
-		}
-	} else {
-		iscorect = false
-	}
-	return iscorect
-}
-
+// Function to test if a number is egal to my bet in a same line
 func LineMissing(board [][]rune, k, line int) bool {
 	for column := 0; column < 9; column++ {
-		if board[line][column] == rune(k)+48 {
+		if board[line][column] == rune(k)+48 { // line is const and column increase
 			return false
 		}
 	}
 	return true
 }
 
+// Function to test if a number is egal to my bet in a same column
 func ColumnMissing(board [][]rune, k, column int) bool {
 	for line := 0; line < 9; line++ {
-		if board[line][column] == rune(k)+48 {
+		if board[line][column] == rune(k)+48 { // column is const and line increase
 			return false
 		}
 	}
 	return true
 }
 
-func BlocMissing(board [][]rune, k, j, i int) bool {
-	i2 := i - (i % 3)
-	j2 := j - (j % 3)
-	for i = i2; i < i2+3; i++ {
-		for j = j2; j < j2+3; j++ {
-			if board[i][j] == rune(k)+48 {
+// Function to test if a number is egal to my bet in a same block
+func BlocMissing(board [][]rune, k, column, line int) bool {
+	lineBlock := line - (line % 3)       // 3 block cut, 0-2 3-5 6-8
+	columnBlock := column - (column % 3) // 3 block cut, 0-2 3-5 6-8
+	for line = lineBlock; line < lineBlock+3; line++ {
+		for column = columnBlock; column < columnBlock+3; column++ {
+			if board[line][column] == rune(k)+48 { // Scan the block entire
 				return false
 			}
 		}
@@ -78,40 +51,40 @@ func BlocMissing(board [][]rune, k, j, i int) bool {
 	return true
 }
 
-func IsValid(board [][]rune, position int) bool {
+// Recursive function which travel my sudoku
+func NumberIsValid(board [][]rune, position int) bool {
 
-	// Si on est à la 82e case (on sort du tableau)
+	// Stop on the 82th case (out of range)
 	if position == 9*9 {
 		return true
 	}
-	// On récupère les coordonnées de la case
-	i := position % 9
-	j := position / 9
+	// We take case's coordonates
+	line := position / 9
+	column := position % 9
 
-	// Si la case n'est pas un point, on passe à la suivante (appel récursif)
-	if board[i][j] != 46 {
-		return IsValid(board, position+1)
+	// If is ont a dot, we move to the next one
+	if board[line][column] != 46 {
+		return NumberIsValid(board, position+1)
 	}
-	// énumération des valeurs possibles
+	// enumeration of possible values
 	for k := 1; k <= 9; k++ {
-		// Si la valeur est absente, donc autorisée
-		if LineMissing(board, k, i) && ColumnMissing(board, k, j) && BlocMissing(board, k, j, i) {
-			// On enregistre k dans la grille
-
-			board[i][j] = rune(k) + 48
-			// On appelle récursivement la fonction estValide(), pour voir si ce choix est bon par la suite
-			if IsValid(board, position+1) {
-				return true // Si le choix est bon, plus la peine de continuer, on renvoie true :)
+		// If the value is missing, we can choose them
+		if LineMissing(board, k, line) && ColumnMissing(board, k, column) && BlocMissing(board, k, column, line) {
+			// We save k in the grid
+			board[line][column] = rune(k) + 48
+			// We recursively call the function NumberIsValid(), to see if this choice is correct afterwards
+			if NumberIsValid(board, position+1) {
+				return true // If the choice is good, no more bother to continue, we return true 😁
 			}
 		}
-		// Tous les chiffres ont été testés, aucun n'est bon, on réinitialise la case
-		board[i][j] = 46
+		// All the figures have been tested, none is good, we reset the box 😔
+		board[line][column] = 46
 	}
-	// Puis on retourne false :(
+	// And we return false :(
 	return false
 }
 
-// Aide pour afficher notre sudoku
+// Help us to print our board
 func Join(strs string, sep string) string {
 	var str string
 	for i := 0; i < len(strs); i++ {
@@ -122,4 +95,20 @@ func Join(strs string, sep string) string {
 		}
 	}
 	return str
+}
+
+// Display our beautiful sudoku (Thanks Maxime 😁)
+func Display(board [][]rune) {
+	fmt.Println("╔═══╤═══╤═══╦═══╤═══╤═══╦═══╤═══╤═══╗")
+	for i, value := range board {
+		fmt.Println("║ " + Join(string(value)[:3], " │ ") + " ║ " + Join(string(value)[3:6], " │ ") + " ║ " + Join(string(value)[6:9], " │ ") + " ║")
+		if i < 8 {
+			if i == 2 || i == 5 {
+				fmt.Println("╠═══╪═══╪═══╬═══╪═══╪═══╬═══╪═══╪═══╣")
+			} else {
+				fmt.Println("╟───┼───┼───╫───┼───┼───╫───┼───┼───╢")
+			}
+		}
+	}
+	fmt.Println("╚═══╧═══╧═══╩═══╧═══╧═══╩═══╧═══╧═══╝")
 }
