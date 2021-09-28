@@ -10,11 +10,38 @@ func main() {
 	for i := range os.Args[1:] {
 		board = append(board, []rune(os.Args[1:][i]))
 	}
-	fmt.Println("Sudoku donnée : ")
-	Display(board)
-	fmt.Println("Sudoku résolu : ")
-	NumberIsValid(board, 0)
-	Display(board)
+	if TestEntryValidity(board) {
+		fmt.Println("Sudoku donnée : ")
+		Display(board)
+		NumberIsValid(board, 0)
+		fmt.Println("Sudoku résolu : ")
+		Display(board)
+	} else {
+		fmt.Println("Error")
+	}
+
+}
+
+func TestEntryValidity(board [][]rune) bool {
+	isCorrect := true
+	if len(board) == 9 { // test if we have 9 argument
+		for str := 0; str < len(board); str++ {
+			if len(board[str]) == 9 { // test if each argument have 9 character
+				for _, value := range board[str] {
+					if value != '.' {
+						if !('0' <= value && value <= '9') {
+							isCorrect = false
+						}
+					}
+				}
+			} else {
+				isCorrect = false
+			}
+		}
+	} else {
+		isCorrect = false
+	}
+	return isCorrect
 }
 
 // Function to test if a number is egal to my bet in a same line
@@ -53,7 +80,6 @@ func BlocMissing(board [][]rune, k, column, line int) bool {
 
 // Recursive function which travel my sudoku
 func NumberIsValid(board [][]rune, position int) bool {
-
 	// Stop on the 82th case (out of range)
 	if position == 9*9 {
 		return true
@@ -61,7 +87,6 @@ func NumberIsValid(board [][]rune, position int) bool {
 	// We take case's coordonates
 	line := position / 9
 	column := position % 9
-
 	// If is ont a dot, we move to the next one
 	if board[line][column] != 46 {
 		return NumberIsValid(board, position+1)
