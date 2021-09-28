@@ -10,9 +10,11 @@ func main() {
 	for i := range os.Args[1:] {
 		tableau = append(tableau, []rune(os.Args[1:][i]))
 	}
-	IsValid(tableau, 0)
-	for _, value := range tableau {
-		fmt.Println(Join(string(value), " "))
+	if ValidGrid(tableau) {
+		IsValid(tableau, 0)
+		for _, value := range tableau {
+			fmt.Println(Join(string(value), " "))
+		}
 	}
 }
 
@@ -30,6 +32,7 @@ func ValidGrid(tableau [][]rune) bool {
 		}
 	} else {
 		iscorect = false
+		fmt.Println("ERROR")
 	}
 	return iscorect
 }
