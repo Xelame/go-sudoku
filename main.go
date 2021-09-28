@@ -12,7 +12,7 @@ func main() {
 	}
 	IsValid(tableau, 0)
 	for _, value := range tableau {
-		fmt.Println(string(value))
+		fmt.Println(Join(string(value), " "))
 	}
 }
 
@@ -82,30 +82,30 @@ func IsValid(board [][]rune, position int) bool {
 	// énumération des valeurs possibles
 	for k := 1; k <= 9; k++ {
 		// Si la valeur est absente, donc autorisée
-		if LineMissing(board, k, i) && ColumnMissing(board, k, j) && BlocMissing(board, k, i, j) {
+		if LineMissing(board, k, i) && ColumnMissing(board, k, j) && BlocMissing(board, k, j, i) {
 			// On enregistre k dans la grille
-			fmt.Println(k)
+
 			board[i][j] = rune(k) + 48
 			// On appelle récursivement la fonction estValide(), pour voir si ce choix est bon par la suite
 			if IsValid(board, position+1) {
 				return true // Si le choix est bon, plus la peine de continuer, on renvoie true :)
 			}
 		}
+		// Tous les chiffres ont été testés, aucun n'est bon, on réinitialise la case
+		board[i][j] = 46
 	}
-	// Tous les chiffres ont été testés, aucun n'est bon, on réinitialise la case
-	board[i][j] = 46
 	// Puis on retourne false :(
 	return false
 }
 
 // Aide pour afficher notre sudoku
-func Join(strs [9]string, sep string) string {
+func Join(strs string, sep string) string {
 	var str string
 	for i := 0; i < len(strs); i++ {
 		if i != len(strs)-1 {
-			str += strs[i] + sep
+			str += string(strs[i]) + sep
 		} else {
-			str += strs[i]
+			str += string(strs[i])
 		}
 	}
 	return str
