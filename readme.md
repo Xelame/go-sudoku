@@ -4,7 +4,7 @@ The goal of this raid is to resolve a sudoku given as arguments in 2 days with a
 
 For exemple if I write in my bash console (linux) :
 
-go run . ".96.4...1" "1...6...4" "5.481.39." "..795..43" ".3..8...." "4.5.23.18" ".1.63..59" ".59.7.83." "..359...7"
+go run . ".96.4...1" "1...6...4" "5.481.39." "..795..43" ".3..8...." "4.5.23.18" ".1.63..59" ".59.7.83." "..359...7" .
 (to explain, I compile and run my main.go file with 9 argument who I give which is a string of 9 digit or dot to stand for an empty case)
 
 The structure of sudoku therefore looks like this :
