@@ -11,10 +11,10 @@ func main() {
 		board = append(board, []rune(os.Args[1:][i]))
 	}
 	if TestEntryValidity(board) {
-		fmt.Println("Sudoku donnée : ")
+		fmt.Println("Sudoku given : ")
 		Display(board)
 		NumberIsValid(board, 0)
-		fmt.Println("Sudoku résolu : ")
+		fmt.Println("Sudoku solved : ")
 		Display(board)
 	} else {
 		fmt.Println("Error")
@@ -122,7 +122,7 @@ func Join(strs string, sep string) string {
 	return str
 }
 
-// Display our beautiful sudoku (Thanks Maxime 😁)
+// Display our beautiful sudoku 😁
 func Display(board [][]rune) {
 	fmt.Println("╔═══╤═══╤═══╦═══╤═══╤═══╦═══╤═══╤═══╗")
 	for i, value := range board {
